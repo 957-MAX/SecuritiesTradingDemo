@@ -6,6 +6,27 @@ import org.slf4j.LoggerFactory;
 import java.util.Scanner;
 
 public class MainConsole {
+	
+	//启动主控制台循环
+	 public static void start() {
+	        Scanner scanner = new Scanner(System.in);
+	        
+	        while (true) {
+	            // 显示主菜单
+	            String command = display();
+	            
+	            // 处理用户命令
+	            handleCommand(command);
+	            
+	            // 添加短暂延迟，避免过快循环
+	            try {
+	                Thread.sleep(100);
+	            } catch (InterruptedException e) {
+	                Thread.currentThread().interrupt();
+	                break;
+	            }
+	        }
+	    }
 	// 使用专门的用户操作日志记录器
     private static final Logger userActionLogger = LoggerFactory.getLogger("USER_ACTION_LOGGER");
     
