@@ -1,5 +1,7 @@
 package com.sec.trade;
 
+import com.sec.trade.ui.LoginConsole;
+
 import quickfix.*;
 import quickfix.SessionSettings;
 import quickfix.MemoryStoreFactory;
@@ -20,6 +22,12 @@ public class Application {
     private static final Logger log = LoggerFactory.getLogger(Application.class);
 
     public static void main(String[] args) {
+        // 显示登录界面
+        if (!LoginConsole.authenticate()) {
+            System.exit(0); // 登录失败退出系统
+        }
+        
+        
         log.info("====== 证券交易系统启动 ======");
         
         try {

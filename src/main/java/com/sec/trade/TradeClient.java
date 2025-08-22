@@ -35,6 +35,8 @@ import quickfix.field.TransactTime;
 import quickfix.fix44.ExecutionReport;
 import quickfix.fix44.NewOrderSingle;
 
+import com.sec.trade.ui.MainConsole;
+
 public class TradeClient extends MessageCracker implements Application {
     private static final Logger log = LoggerFactory.getLogger(TradeClient.class);
     private SessionID sessionId;
@@ -63,11 +65,24 @@ public class TradeClient extends MessageCracker implements Application {
         this.sessionId = sessionId;
         this.isLoggedOn = true;
         
+        // 启动主控制台
+        startMainConsole();
+        
         // 登录成功后发送示例订单
         sendSampleOrder();
         
         // 重置重连计数器
         resetReconnectAttempts();
+    }
+    
+    // 启动主控制台
+    private void startMainConsole() {
+        new Thread(() -> {
+            while (true) {
+                String command = MainConsole.display();
+                MainConsole.handleCommand(command);
+            }
+        }).start();
     }
     
     // 重置重连计数器
